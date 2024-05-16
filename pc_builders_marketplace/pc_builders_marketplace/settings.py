@@ -31,6 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Set the SITE_ID to 2 to specify the current site for multi-site configuration.
+SITE_ID = 2
 
 # Application definition
 
@@ -44,8 +46,27 @@ INSTALLED_APPS = [
     'products_app',
     'customers_app',
     'crispy_forms',
-    "crispy_bootstrap5",
+    'crispy_bootstrap5',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google'
 ]
+
+# Configure social account providers for authentication.
+# Here, we define settings for Google authentication provider,
+# specifying the required scopes for profile and email access,
+# along with additional authentication parameters.
+SOCIALACCOUNT_PROVIDERS = {
+    "google" : {
+        "SCOPE": [
+            "profile",
+            "email"
+        ],
+        "AUTH_PARAMS": {"access_type": "online"}
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,6 +76,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # This allows the application to access information about the logged-in user throughout the request-response cycle.
+    'allauth.account.middleware.AccountMiddleware',  # Add this line
 ]
 
 ROOT_URLCONF = 'pc_builders_marketplace.urls'
@@ -126,6 +149,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+# Configure authentication backends for login/logout functionality.
+# Django's built-in ModelBackend is used for standard authentication,
+# while allauth's AuthenticationBackend is utilized for social authentication.
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+# Specify the redirect URLs after login and logout.
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 STATIC_URL = 'static/'
 
