@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import environ
 from pathlib import Path
+import os
 
 # READS THE ENVIRONMENTAL VARIABLES
 env = environ.Env()
@@ -32,7 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Set the SITE_ID to 2 to specify the current site for multi-site configuration.
-SITE_ID = 2
+SITE_ID = 3
 
 # Application definition
 
@@ -162,7 +163,12 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-STATIC_URL = 'static/'
+# How we are going to access css elements in the browser
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'customers_app','static'),
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
