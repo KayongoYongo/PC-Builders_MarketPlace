@@ -1,11 +1,12 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from customers_app.models import CustomUser
 from django import forms
 from django.forms import TextInput, PasswordInput
 
 class signUpForm(UserCreationForm):
     class Meta:
-        model = User
+        model = CustomUser
         fields = [
             "username",
             "email",
