@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google'
 ]
 
+# Tell Django to use this user model as default
+AUTH_USER_MODEL = 'customers_app.CustomUser'
+
 # Configure social account providers for authentication.
 # Here, we define settings for Google authentication provider,
 # specifying the required scopes for profile and email access,
