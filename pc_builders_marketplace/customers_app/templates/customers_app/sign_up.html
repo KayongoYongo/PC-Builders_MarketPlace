@@ -44,15 +44,24 @@
             {% endfor %}
         </div>
         <br>
-        <button type="submit" class="btn btn-primary">Sign Up</button>
+        <div class="d-grid gap-5">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </div>
     </form>
-    <br>
-    <p>Already have an account? <a href="{% url 'log_in' %}" class="btn btn-link" style="display:inline;">Log in</a></p>
-    <br>
-    <p>or</p>
-    <br>
-    {% load socialaccount %}
-    <p>Google Login</p>
-    <a href="{% provider_login_url 'google' %}?next=/">Login With Google</a>
+
+    <div class="text-center mt-3">
+        <p class="d-inline">Already have an account?</p>
+        <a href="{% url 'log_in' %}" class="btn btn-link text-decoration-none fw-bold d-inline">Log in</a>
+    </div>
+    
+    <div class="text-center mt-3">
+        <p>or</p>
+    </div>
+    <div class="text-center mt-3">
+        {% load socialaccount %}
+        <a href="{% provider_login_url 'google' %}?next=/">
+            <img src="{% static 'img/google-square.svg' %}" alt="Google Icon">
+        </a>
+    </div>
 </div>
 {% endblock %}
