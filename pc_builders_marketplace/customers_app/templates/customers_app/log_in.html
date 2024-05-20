@@ -11,7 +11,7 @@
 <div class="container">
     <h1>Log in:</h1>
     
-    <form method="post" action="#">
+    <form method="post" action="{% url 'log_in' %}">
         {% csrf_token %}
         <div class="form-group">
             {{ form.email }}
@@ -27,7 +27,7 @@
             {% endfor %}
         </div>
         <br>
-        <button type="submit" class="btn btn-primary">Sign Up</button>
+        <button type="submit" class="btn btn-primary">Log in</button>
     </form>
     <br>
     <p>Don't have an account? <a href="{% url 'sign_up' %}" class="btn btn-link" style="display:inline;">Sign up</a></p>
