@@ -1,9 +1,9 @@
 from customers_app.forms.sign_up_form import signUpForm
 from customers_app.forms.log_in_form import logInForm
-from django.shortcuts import render, redirect
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
-from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
 
 # Define method for rendering the home page
 def home_page(request):
@@ -49,13 +49,23 @@ def log_in(request):
             # if the form is valid, clean the data
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+            # Check if the "Remember me" checkbox is checked
+            remember_me = form.cleaned_data.get('remember_me')
 
             # Attempt to authenticate the user with the provided credentials
             user = authenticate(request, email=email, password=password)
 
             if user is not None:
+
                 # If authentication is successful, log the user in
                 login(request, user)
+
+                # Set the rememeber me_value
+                if remember_me:
+                    request.session.set_expiry(settings.SESSION_COOKIE_AGE)
+                else:
+                    request.session.session.set_expiry(0)
+
                 # Redirect the user
                 return redirect('home_page')
             else:
