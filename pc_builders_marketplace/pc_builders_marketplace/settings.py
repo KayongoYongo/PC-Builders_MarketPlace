@@ -32,8 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Set the SITE_ID to 2 to specify the current site for multi-site configuration.
-SITE_ID = 3
+# Set the SITE_ID to 4 to specify the current site for multi-site configuration.
+SITE_ID = 4
 
 # Application definition
 
