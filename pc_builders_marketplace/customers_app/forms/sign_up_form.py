@@ -1,12 +1,11 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from customers_app.models import CustomUser
+from django.contrib.auth import get_user_model
 from django import forms
 from django.forms import TextInput, PasswordInput
 
 class signUpForm(UserCreationForm):
     class Meta:
-        model = CustomUser
+        model = get_user_model()
         fields = [
             "username",
             "email",
@@ -42,6 +41,9 @@ class signUpForm(UserCreationForm):
 
         if email is None or email.strip() == '':
             raise forms.ValidationError("The email cannot remain empty")
+        
+        # Get the user model
+        User = get_user_model()
         
         # Check if the email exists
         if User.objects.filter(email=email).exists():
