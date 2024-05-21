@@ -43,10 +43,10 @@
         <a href="{% url 'sign_up' %}" class="btn btn-link text-decoration-none fw-bold d-inline">Sign up</a>
     </div>
 
-
     <div class="text-center mt-3">
         <p>or</p>
     </div>
+    
     <div class="text-center mt-3">
         {% load socialaccount %}
         <a href="{% provider_login_url 'google' %}?next=/">
