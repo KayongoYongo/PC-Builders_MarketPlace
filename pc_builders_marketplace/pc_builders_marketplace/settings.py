@@ -49,12 +49,35 @@ INSTALLED_APPS = [
     'blog_app',
     'crispy_forms',
     'crispy_bootstrap5',
+    'ckeditor',
+    'ckeditor_uploader',    
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google'
 ]
+
+# Django CKEditor configs
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph', 'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert', 'items': ['Image', 'Smiley']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+        ],
+        'height': 300,
+        'width': '100%',
+    },
+}
+
+
+# CK editor uploads
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 # Tell Django to use this user model as default
 AUTH_USER_MODEL = 'customers_app.CustomUser'
@@ -162,6 +185,9 @@ AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 )
+
+# Redirect to the log in url
+LOGIN_URL = "log_in"
 
 # Specify the redirect URLs after login and logout.
 LOGIN_REDIRECT_URL = "/"
