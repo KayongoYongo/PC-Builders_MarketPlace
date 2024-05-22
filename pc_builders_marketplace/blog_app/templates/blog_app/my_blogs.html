@@ -17,6 +17,7 @@
             </div>
             <p>By: {{ blog.author.username }} on {{ blog.created_at }}</p>
             <a href="{% url 'delete_blog' blog.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this blog post?');">Delete</a>
+            <a href="{% url 'update_blog' blog.id %}" class="btn btn-primary" onclick="return confirm('Are you sure you want to update this blog post?');">Update</a>         
         </div>
         <hr>
     {% empty %}
