@@ -1,5 +1,6 @@
 from blog_app.forms.blog_form import BlogForm
 from blog_app.models import Blog
+from customers_app.models import CustomUser
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 import logging
@@ -49,4 +50,11 @@ def create_blog(request):
 
     return render(request, 'blog_app/add_blog.html', {'form': form})
 
-
+@login_required
+def view_my_blogs(request):
+    """
+    This function returns blogs created by the individual user
+    """
+    user = request.user
+    blogs = Blog.objects.filter(author=user)
+    return render(request, 'blog_app/my_blogs.html', {'blogs': blogs, 'username': user.username})
