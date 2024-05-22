@@ -1,6 +1,6 @@
 from blog_app.forms.blog_form import BlogForm
 from blog_app.models import Blog
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 import logging
 
@@ -13,6 +13,13 @@ def blog_list(request):
     """
     blogs = Blog.objects.all()
     return render(request, 'blog_app/blog_list.html', {'blogs': blogs})
+
+def view_blog(request, id):
+    """
+    This function enables a user to view a single blog post
+    """
+    blog = get_object_or_404(Blog, id=id)
+    return render(request, 'blog_app/blog_detail.html', {'blog': blog})
 
 # This makes sure that only a user that is logged in can create a blog
 @login_required
@@ -41,3 +48,5 @@ def create_blog(request):
         form = BlogForm()
 
     return render(request, 'blog_app/add_blog.html', {'form': form})
+
+
