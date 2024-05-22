@@ -2,6 +2,7 @@ from blog_app.forms.blog_form import BlogForm
 from blog_app.models import Blog
 from customers_app.models import CustomUser
 from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import logging
 
@@ -58,3 +59,17 @@ def view_my_blogs(request):
     user = request.user
     blogs = Blog.objects.filter(author=user)
     return render(request, 'blog_app/my_blogs.html', {'blogs': blogs, 'username': user.username})
+
+@login_required
+def delete_blog(request, id):
+    """
+    This function deletes a blog 
+    """
+    blog = get_object_or_404(Blog, id=id)
+
+    # Delete the blog
+    blog.delete()
+
+    # Send the user a message
+    messages.success(request, "Blog post deleted successfully.")
+    return redirect('view_my_blogs')
