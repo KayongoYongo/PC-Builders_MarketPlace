@@ -4,6 +4,7 @@ from customers_app.models import CustomUser
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 # Create your views here.
 def blog_list(request):
