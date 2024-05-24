@@ -22,8 +22,17 @@ def blog_list(request):
     # Retireve all blog objects from the database and store it in the variable blog
     blogs = Blog.objects.all()
 
+    # Number of blogs per page
+    paginator = Paginator(blogs, 4)
+
+    # Get the page number from the request
+    page_number = request.GET.get('page')
+
+    # Get the blogs for the current page
+    page_obj = paginator.get_page(page_number)
+
     # Render the blog_list template with the blog data
-    return render(request, 'blog_app/blog_list.html', {'blogs': blogs})
+    return render(request, 'blog_app/blog_list.html', {'page_obj': page_obj})
 
 def view_blog(request, id):
     """
