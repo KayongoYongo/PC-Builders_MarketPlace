@@ -1,7 +1,6 @@
 from blog_app.models import Blog
-from ckeditor.fields import RichTextField
 from django import forms
-
+from django_ckeditor_5.widgets import CKEditor5Widget
 
 class BlogForm(forms.ModelForm):
     class Meta:
@@ -9,7 +8,7 @@ class BlogForm(forms.ModelForm):
         fields = ['title', 'content', 'status']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'title', 'class': 'form-control'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'content'}),
+            'content': CKEditor5Widget(attrs={"class": "django_ckeditor_5"}, config_name="extends"),
             'status': forms.Select(attrs={'class': 'form-control'}, choices=[('draft', 'Draft'), ('published', 'Published')]),
         }
 
