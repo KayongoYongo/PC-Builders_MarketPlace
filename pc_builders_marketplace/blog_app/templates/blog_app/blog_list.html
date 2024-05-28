@@ -6,36 +6,128 @@
     {{ super }}
     <!-- Load Bootstrap CSS for styling -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css">
+    
 {% endblock %}
 {% block content %}
-<div class="container">
-    <h1>Blogs</h1>
-    <!-- Loop through each blog in the paginated page object -->
-    {% for blog in page_obj %}
-        <a href="{% url 'view_blog' blog.id %}" class="text-decoration-none text-reset">
-            <div class="blog-post">
-                <h2>{{ blog.title }}</h2>
-                <div class="blog-content">
-                    {{ blog.content|safe }}
-                </div>
-                <strong><p>By: {{ blog.author.username }} on {{ blog.created_at }}</p></strong>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#!">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#!">Create Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#!">My Blogs</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">All Blogs</a></li>
+                </ul>
             </div>
-        </a>
-        <hr>
-    {% endfor %}
+        </div>
+    </nav>
 
-    {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo First</a>
-        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-    {% endif %}
+    <!-- Page header with logo and tagline-->
+    <header class="py-1 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Welcome to the PC builders Blog!</h1>
+            </div>
+        </div>
+    </header>
 
-    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">&raquo Last</a>
-    {% endif %}
-
-    <hr>
+    <!-- Nested row for non-featured blog posts-->
+    <div class="container">
+        <h1>Blogs</h1>
+        <div class="row">
+            <!-- Main content column -->
+            <div class="col-lg-8">
+                <!-- Featured blog -->
+                {% if featured_blog %}
+                <div class="card mb-4">
+                    <a href="{% url 'view_blog' featured_blog.id %}">
+                        <img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." />
+                    </a>
+                    <div class="card-body">
+                        <div class="small text-muted">{{ featured_blog.created_at }}</div>
+                        <h2 class="card-title h4">{{ featured_blog.title }}</h2>
+                        <div class="blog-content">
+                            {{ featured_blog.content|safe }}
+                        </div>
+                        <strong><p>By: {{ featured_blog.author.username }}</p></strong>
+                        <a class="btn btn-primary" href="{% url 'view_blog' featured_blog.id %}">Read more →</a>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Nested row for non-featured blog posts -->
+                <div class="row">
+                    {% for blog in page_obj %}
+                    {% if blog.id != featured_blog.id %}
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <a href="{% url 'view_blog' blog.id %}">
+                                <img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." />
+                            </a>
+                            <div class="card-body">
+                                <div class="small text-muted">{{ blog.created_at }}</div>
+                                <h2 class="card-title h4">{{ blog.title }}</h2>
+                                <div class="blog-content">
+                                    {{ blog.content|safe }}
+                                </div>
+                                <strong><p>By: {{ blog.author.username }}</p></strong>
+                                <a class="btn btn-primary" href="{% url 'view_blog' blog.id %}">Read more →</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Side widgets -->
+            <div class="col-lg-4">
+                <!-- Search widget -->
+                <div class="card mb-4">
+                    <div class="card-header">Search</div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                            <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Side widget -->
+                <div class="card mb-4">
+                    <div class="card-header">Side Widget</div>
+                    <div class="card-body">New features coming soon!</div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Pagination -->
+        <nav aria-label="Pagination">
+            <hr class="my-0" />
+            <ul class="pagination justify-content-center my-4">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="First">&laquo; First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">Previous</a>
+                </li>
+                {% endif %}
+        
+                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">&raquo; Last</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 
 {% endblock %}
