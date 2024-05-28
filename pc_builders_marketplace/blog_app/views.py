@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+import random
 
 # Create your views here.
 def blog_list(request):
@@ -19,11 +20,14 @@ def blog_list(request):
         Renders a template with the blog data
     """
 
-    # Retireve all blog objects from the database and store it in the variable blog
-    blogs = Blog.objects.all()
+    # Retrieve all blog objects from the database and order them by creation date
+    blogs = Blog.objects.all().order_by('-created_at')
+
+    # Featured blog
+    featured_blog = random.choice(blogs)
 
     # Number of blogs per page
-    paginator = Paginator(blogs, 4)
+    paginator = Paginator(blogs, 2)
 
     # Get the page number from the request
     page_number = request.GET.get('page')
@@ -32,7 +36,7 @@ def blog_list(request):
     page_obj = paginator.get_page(page_number)
 
     # Render the blog_list template with the blog data
-    return render(request, 'blog_app/blog_list.html', {'page_obj': page_obj})
+    return render(request, 'blog_app/blog_list.html', {'page_obj': page_obj, 'featured_blog': featured_blog} )
 
 def view_blog(request, id):
     """
