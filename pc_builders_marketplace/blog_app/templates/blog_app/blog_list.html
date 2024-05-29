@@ -10,21 +10,6 @@
 {% endblock %}
 {% block content %}
 
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#!">Home</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#!">Create Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">My Blogs</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">All Blogs</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
     <!-- Page header with logo and tagline-->
     <header class="py-1 bg-light border-bottom mb-4">
         <div class="container">
@@ -36,11 +21,11 @@
 
     <!-- Nested row for non-featured blog posts-->
     <div class="container">
-        <h1>Blogs</h1>
         <div class="row">
             <!-- Main content column -->
             <div class="col-lg-8">
                 <!-- Featured blog -->
+                <h3>Featured blog</h3>
                 {% if featured_blog %}
                 <div class="card mb-4">
                     <a href="{% url 'view_blog' featured_blog.id %}">
@@ -49,9 +34,11 @@
                     <div class="card-body">
                         <div class="small text-muted">{{ featured_blog.created_at }}</div>
                         <h2 class="card-title h4">{{ featured_blog.title }}</h2>
+                        <!--
                         <div class="blog-content">
                             {{ featured_blog.content|safe }}
                         </div>
+                        -->
                         <strong><p>By: {{ featured_blog.author.username }}</p></strong>
                         <a class="btn btn-primary" href="{% url 'view_blog' featured_blog.id %}">Read more →</a>
                     </div>
@@ -70,9 +57,11 @@
                             <div class="card-body">
                                 <div class="small text-muted">{{ blog.created_at }}</div>
                                 <h2 class="card-title h4">{{ blog.title }}</h2>
+                                <!--
                                 <div class="blog-content">
                                     {{ blog.content|safe }}
                                 </div>
+                                -->
                                 <strong><p>By: {{ blog.author.username }}</p></strong>
                                 <a class="btn btn-primary" href="{% url 'view_blog' blog.id %}">Read more →</a>
                             </div>
