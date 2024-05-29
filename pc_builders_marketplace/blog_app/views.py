@@ -113,10 +113,19 @@ def view_my_blogs(request):
     user = request.user
 
     # Filter the blogs based on the author
-    blogs = Blog.objects.filter(author=user)
+    blogs = Blog.objects.filter(author=user).order_by('-created_at')
+
+    # Number of blogs per page
+    paginator = Paginator(blogs, 6)
+
+    # Get the page number from the request
+    page_number = request.GET.get('page')
+
+    # Get the blogs for the current page
+    page_obj = paginator.get_page(page_number)
 
     # Render the my_blogs template with the blogs and the username
-    return render(request, 'blog_app/my_blogs.html', {'blogs': blogs, 'username': user.username})
+    return render(request, 'blog_app/my_blogs.html', {'page_obj': page_obj, 'username': user.username})
 
 @login_required
 def delete_blog(request, id):
