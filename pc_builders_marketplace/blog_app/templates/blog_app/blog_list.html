@@ -28,9 +28,13 @@
                 <h3>Featured blog</h3>
                 {% if featured_blog %}
                 <div class="card mb-4">
-                    <a href="{% url 'view_blog' featured_blog.id %}">
-                        <img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." />
-                    </a>
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <a href="{% url 'view_blog' featured_blog.id %}">
+                                <img class="card-img-top img-fluid" src="{{ featured_blog.banner.url }}" alt="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" />
+                            </a>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="small text-muted">{{ featured_blog.created_at }}</div>
                         <h2 class="card-title h4">{{ featured_blog.title }}</h2>
@@ -51,9 +55,13 @@
                     {% if blog.id != featured_blog.id %}
                     <div class="col-lg-6 mb-4">
                         <div class="card h-100">
-                            <a href="{% url 'view_blog' blog.id %}">
-                                <img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." />
-                            </a>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-6">
+                                    <a href="{% url 'view_blog' blog.id %}">
+                                        <img class="card-img-top" src="{{ blog.banner.url }}" alt="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" />
+                                    </a>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="small text-muted">{{ blog.created_at }}</div>
                                 <h2 class="card-title h4">{{ blog.title }}</h2>
