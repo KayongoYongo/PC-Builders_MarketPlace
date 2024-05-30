@@ -271,6 +271,12 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'blog_app','static'),
 )
 
+# How we are going to acces the media element in the browser
+MEDIA_URL = '/media/'
+
+# The path where Django stores our uploaded files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
