@@ -7,6 +7,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=200)
     content = CKEditor5Field(blank=True, null=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    banner = models.ImageField(default='masterace.png', upload_to='blog_images/',blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=[('draft', 'Draft'), ('published', 'Published')])
